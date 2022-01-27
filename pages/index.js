@@ -1,38 +1,7 @@
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
+import React from 'react';
+import { useRouter } from 'next/router'
 import appConfig from "../config.json";
-
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      @import url('https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap');
-    
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Supermercado One', cursive; 
-      }
-      /* App fit Height */
-      html,
-      body,
-      #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
 
 function Titulo(props) {
   const Tag = props.tag;
@@ -41,7 +10,7 @@ function Titulo(props) {
       <Tag>{props.children}</Tag>
       <style jsx>{`
         ${Tag} {
-          color: ${appConfig.theme.colors.neutrals['050']};
+          color: ${appConfig.theme.colors.neutrals["050"]};
           font-size: 24px;
           font-weight: 600;
         }
@@ -66,11 +35,12 @@ function HomePage() {
 export default HomePage*/
 
 export default function PaginaInicial() {
-  const username = "peas";
+  // const username = "GuiACamargo";
+  const [username, setUsername] = React.useState("GuiACamargo")
+  const roteamento = useRouter();
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: "flex",
@@ -105,6 +75,10 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (infosDoEvento) {
+              infosDoEvento.preventDefault();
+              roteamento.push("/chat");
+            }}
             styleSheet={{
               display: "flex",
               flexDirection: "column",
@@ -123,12 +97,18 @@ export default function PaginaInicial() {
                 color: appConfig.theme.colors.neutrals[300],
               }}
             >
-
               {appConfig.name}
-              
             </Text>
-
+            
             <TextField
+              placeholder="Digite seu usuário do GitHub"
+              value={username}
+              onChange={function handler (event){
+                // Onde ta o valor?
+                const valor = event.target.value;
+                // Trocar o valor da variavel
+                setUsername(valor);
+              }}
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -139,6 +119,7 @@ export default function PaginaInicial() {
                 },
               }}
             />
+            
             <Button
               type="submit"
               label="Entrar"
@@ -150,7 +131,6 @@ export default function PaginaInicial() {
                 mainColorStrong: "#269aaf",
               }}
             />
-
           </Box>
           {/* Formulário */}
 
