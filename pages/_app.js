@@ -8,6 +8,7 @@ function GlobalStyle() {
           padding: 0;
           box-sizing: border-box;
           list-style: none;
+          font-family: "Supermercado One", cursive;
         }
         body {
           font-family: "Supermercado One", cursive;

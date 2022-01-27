@@ -11,8 +11,9 @@ function Titulo(props) {
       <style jsx>{`
         ${Tag} {
           color: ${appConfig.theme.colors.neutrals["050"]};
-          font-size: 24px;
+          font-size: 32px;
           font-weight: 600;
+          margin-bottom: 10px;
         }
       `}</style>
     </>
@@ -122,7 +123,7 @@ export default function PaginaInicial() {
             
             <Button
               type="submit"
-              label="Entrar"
+              label="Entrar na primeira área"
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
@@ -130,6 +131,7 @@ export default function PaginaInicial() {
                 mainColorLight: "#36aec3",
                 mainColorStrong: "#269aaf",
               }}
+              
             />
           </Box>
           {/* Formulário */}
@@ -142,7 +144,7 @@ export default function PaginaInicial() {
               alignItems: "center",
               maxWidth: "200px",
               padding: "16px",
-              backgroundColor: "#810b1d",
+              backgroundColor: "#601016",
               border: "1px solid",
               borderColor: "#570713",
               borderRadius: "10px",
@@ -152,7 +154,7 @@ export default function PaginaInicial() {
           >
             <Image
               styleSheet={{
-                borderRadius: "50%",
+                borderRadius: "20%",
                 marginBottom: "16px",
               }}
               src={`https://github.com/${username}.png`}
