@@ -1,6 +1,11 @@
 import { Box, Text, TextField, Image, Button } from "@skynexui/components";
+import { withRouter } from "next/router";
 import React from "react";
 import appConfig from "../config.json";
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap');
+</style>
 
 export default function ChatPage() {
   // Sua lógica vai aqui
@@ -10,7 +15,7 @@ export default function ChatPage() {
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
       id: listaDeMensagens.length + 1,
-      de: "vanessametonini",
+      de: "GuiACamargo",
       texto: novaMensagem,
     };
     setListaDeMensagens([
@@ -26,8 +31,8 @@ export default function ChatPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: appConfig.theme.colors.primary[500],
-        backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)`,
+        backgroundColor: appConfig.theme.colors.neutrals[300],
+        backgroundImage: `url(https://i.imgur.com/Cvj7y5g.png)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundBlendMode: "multiply",
@@ -77,7 +82,7 @@ export default function ChatPage() {
                 setMensagem(valor);
               }}
               onKeyPress={(event) => {
-                if (event.key === "Enter") {
+                if (event.key === "Enter" && mensagem.length >= 1) {
                   event.preventDefault();
 
                   handleNovaMensagem(mensagem);
@@ -86,7 +91,8 @@ export default function ChatPage() {
               placeholder="Insira sua mensagem aqui..."
               type="textarea"
               styleSheet={{
-                width: "100%",
+                fontSize: "15px",
+                width: "90%",
                 border: "0",
                 resize: "none",
                 borderRadius: "5px",
@@ -95,6 +101,26 @@ export default function ChatPage() {
                 marginRight: "12px",
                 color: appConfig.theme.colors.neutrals[200],
               }}
+            />
+            <Button
+                onClick={() => {
+                  if(mensagem.length >= 1) {
+    
+                    handleNovaMensagem(mensagem);
+                  }
+                }}
+                variant="tertiary"
+                colorVariant="dark"
+                label="Enviar"
+                styleSheet={{
+                  boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
+                  color: appConfig.theme.colors.neutrals[100],
+                  backgroundColor: "#269aaf",
+                  width: "10%",
+                  height: "82%",
+                  padding: "6px 8px",
+                  marginBottom: "8px",
+                }}
             />
           </Box>
         </Box>
@@ -115,12 +141,17 @@ function Header() {
           justifyContent: "space-between",
         }}
       >
-        <Text variant="heading5">Chat</Text>
+        <Text variant="heading5">Ch4t Biome</Text>
         <Button
           variant="tertiary"
-          colorVariant="neutral"
-          label="Logout"
+          colorVariant="dark"
+          label="Voltar ao Lobby"
           href="/"
+          styleSheet={{
+            boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
+            color: appConfig.theme.colors.neutrals[100],
+            backgroundColor: "#601016",
+          }}
         />
       </Box>
     </>
@@ -162,19 +193,28 @@ function MessageList(props) {
             >
               <Image
                 styleSheet={{
-                  width: "20px",
-                  height: "20px",
+                  width: "40px",
+                  height: "40px",
                   borderRadius: "50%",
-                  display: "inline-block",
+                  display: "inline",
                   marginRight: "8px",
                 }}
-                src={`https://github.com/vanessametonini.png`}
+                src={`https://github.com/GuiACamargo.png`}
               />
-              <Text tag="strong">{mensagem.de}</Text>
+              <Text tag="strong"
+              styleSheet={{
+                fontSize: "18px",
+                display: "inline-block",
+              }}
+              >
+                {mensagem.de}
+              </Text>
+              
               <Text
                 styleSheet={{
-                  fontSize: "10px",
-                  marginLeft: "8px",
+                  display:"inline-block",
+                  fontSize: "11px",
+                  marginLeft: "10px",
                   color: appConfig.theme.colors.neutrals[300],
                 }}
                 tag="span"

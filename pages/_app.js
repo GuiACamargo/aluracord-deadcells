@@ -1,3 +1,13 @@
+import Head from "next/head";
+
+<Head>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
+  <link href="https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap" rel="stylesheet"></link>
+  
+</Head>
+
 function GlobalStyle() {
     return (
       <style global jsx>{`
