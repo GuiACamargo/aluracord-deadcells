@@ -110,8 +110,13 @@ export default function ChatPage() {
                   }
                 }}
                 variant="tertiary"
-                colorVariant="dark"
                 label="Enviar"
+                buttonColors={{
+                  contrastColor: appConfig.theme.colors.neutrals["000"],
+                  mainColor: "#45C0D6",
+                  mainColorLight: "#36aec3",
+                  mainColorStrong: "#269aaf",
+                }}
                 styleSheet={{
                   boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
                   color: appConfig.theme.colors.neutrals[100],

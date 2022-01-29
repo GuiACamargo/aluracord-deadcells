@@ -37,7 +37,7 @@ export default HomePage*/
 
 export default function PaginaInicial() {
   // const username = "GuiACamargo";
-  const [username, setUsername] = React.useState("GuiACamargo")
+  const [username, setUsername] = React.useState("")
   const roteamento = useRouter();
 
   return (
@@ -78,7 +78,11 @@ export default function PaginaInicial() {
             as="form"
             onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
+              if (username === "") {
+                roteamento.push("/error");
+              } else {
               roteamento.push("/chat");
+              }
             }}
             styleSheet={{
               display: "flex",
@@ -123,7 +127,7 @@ export default function PaginaInicial() {
             
             <Button
               type="submit"
-              label="Entrar na primeira área"
+              label="Entrar na Primeira Área"
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
@@ -152,6 +156,7 @@ export default function PaginaInicial() {
               minHeight: "240px",
             }}
           >
+            
             <Image
               styleSheet={{
                 borderRadius: "20%",
