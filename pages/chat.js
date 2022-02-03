@@ -1,19 +1,26 @@
 import { Box, Text, TextField, Image, Button } from "@skynexui/components";
-import { withRouter } from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import appConfig from "../config.json";
 import { createClient } from '@supabase/supabase-js'
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker';
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzUwODY5NywiZXhwIjoxOTU5MDg0Njk3fQ.YKUp2Fka2oqkV5qXKQ7LxQyImpn50WwiqfS4U9OrA2w';
 const SUPABASE_URL = 'https://cfrsablyylcitgwozpeq.supabase.co';
 const supabaseClient = createClient (SUPABASE_URL, SUPABASE_ANON_KEY);
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap');
-</style>
+function escutaMensagensEmTempoReal(adicionaMensagem) {
+  return supabaseClient
+  .from('mensagens')
+  .on('INSERT', (respostaLive) => {
+    adicionaMensagem(respostaLive.new);
+  })
+  .subscribe();
+}
 
 export default function ChatPage() {
-  // Sua lógica vai aqui
+  const roteamento = useRouter();
+  const usuarioLogado = roteamento.query.username;
   const [mensagem, setMensagem] = React.useState("");
   const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
@@ -25,13 +32,20 @@ export default function ChatPage() {
       .then(({ data }) => {
         setListaDeMensagens(data);
       });
-
+      escutaMensagensEmTempoReal((novaMensagem) => {
+        setListaDeMensagens((valorAtualDaLista) => {
+          return [
+            novaMensagem, 
+            ...valorAtualDaLista,
+          ]
+        });
+      });
   }, []);
   
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
       // id: listaDeMensagens.length + 1,
-      de: "GuiACamargo",
+      de: usuarioLogado,
       texto: novaMensagem,
     };
 
@@ -42,15 +56,10 @@ export default function ChatPage() {
         mensagem
       ])
       .then(({ data }) => {
-        setListaDeMensagens([
-          data[0], 
-          ...listaDeMensagens,
-        ]);
       });
 
     setMensagem("");
   }
-  // ./Sua lógica vai aqui
   return (
     <Box
       styleSheet={{
@@ -110,15 +119,13 @@ export default function ChatPage() {
               onKeyPress={(event) => {
                 if (event.key === "Enter" && mensagem.length >= 1) {
                   event.preventDefault();
-
                   handleNovaMensagem(mensagem);
                 }
               }}
               placeholder="Insira sua mensagem aqui..."
               type="textarea"
               styleSheet={{
-                fontSize: "15px",
-                width: "90%",
+                width: "100%",
                 border: "0",
                 resize: "none",
                 borderRadius: "5px",
@@ -126,6 +133,11 @@ export default function ChatPage() {
                 backgroundColor: appConfig.theme.colors.neutrals[800],
                 marginRight: "12px",
                 color: appConfig.theme.colors.neutrals[200],
+              }}
+            />
+            <ButtonSendSticker
+              onStickerClick={(sticker) => {
+                handleNovaMensagem(':sticker: ' + sticker)
               }}
             />
             <Button
@@ -153,11 +165,12 @@ export default function ChatPage() {
                   marginBottom: "8px",
                 }}
             />
+            
           </Box>
         </Box>
       </Box>
     </Box>
-  );
+  )
 }
 
 function Header() {
@@ -182,6 +195,12 @@ function Header() {
             boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
             color: appConfig.theme.colors.neutrals[100],
             backgroundColor: "#601016",
+          }}
+          buttonColors={{
+            contrastColor: appConfig.theme.colors.neutrals["000"],
+            mainColor: "#601016",
+            mainColorLight: "#771920",
+            mainColorStrong: "#601016",
           }}
         />
       </Box>
@@ -253,7 +272,13 @@ function MessageList(props) {
                 {new Date().toLocaleDateString()}
               </Text>
             </Box>
-            {mensagem.texto}
+            {mensagem.texto.startsWith(':sticker:')
+              ? (
+                <Image src={mensagem.texto.replace(':sticker:', '')}/>
+              )
+              : (
+                mensagem.texto
+              )}
           </Text>
         );
       })}

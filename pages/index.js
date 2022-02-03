@@ -81,7 +81,7 @@ export default function PaginaInicial() {
               if (username === "") {
                 roteamento.push("/error");
               } else {
-              roteamento.push("/chat");
+              roteamento.push(`/chat?username=${username}`);
               }
             }}
             styleSheet={{

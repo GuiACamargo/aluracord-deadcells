@@ -37,6 +37,21 @@ function GlobalStyle() {
         #__next > * {
           flex: 1;
         }
+        ::-webkit-scrollbar {
+          width: 15px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #181F25;
+          border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #36AEC3;
+          border-radius: 5px;
+          border: 3px solid #181F25;
+        }
+        ::-webkit-scrollbar-corner {
+          background: rgba(0,0,0,0);
+        }
         /* ./App fit Height */
       `}</style>
     );
