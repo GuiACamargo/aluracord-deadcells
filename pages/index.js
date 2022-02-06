@@ -19,6 +19,7 @@ function Titulo(props) {
     </>
   );
 }
+
 /* Componente React
 function HomePage() {
     // JSX
@@ -36,10 +37,23 @@ function HomePage() {
 export default HomePage*/
 
 export default function PaginaInicial() {
-  // const username = "GuiACamargo";
   const [username, setUsername] = React.useState("")
   const roteamento = useRouter();
-
+  const [nome, setNome] = React.useState("")
+  var validation;
+  
+  if (username != "") {
+    fetch(`https://api.github.com/users/${username}`)
+    .then(response => response.json())
+    .then(data => {
+    setNome(data.name);
+    validation = data.message;
+  })
+    .catch((error) => {
+      console.log(error.message)
+    })
+  }
+  
   return (
     <>
       <Box
@@ -78,7 +92,7 @@ export default function PaginaInicial() {
             as="form"
             onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
-              if (username === "") {
+              if (username === "" || validation === "Not Found") {
                 roteamento.push("/error");
               } else {
               roteamento.push(`/chat?username=${username}`);
@@ -137,6 +151,24 @@ export default function PaginaInicial() {
               }}
               
             />
+
+            <Button
+              onClick={() => {
+                roteamento.push(`/chat?username=Anônimo`);
+              }}
+              type="button"
+              label="Usuário Anônimo"
+              styleSheet={{
+                width: "80%",
+                marginTop: "10px",
+              }}
+              buttonColors={{
+                contrastColor: appConfig.theme.colors.neutrals["000"],
+                mainColor: appConfig.theme.colors.neutrals["500"],
+                mainColorLight: appConfig.theme.colors.neutrals["300"],
+                mainColorStrong: appConfig.theme.colors.neutrals["400"],
+              }}
+            />
           </Box>
           {/* Formulário */}
 
@@ -174,6 +206,17 @@ export default function PaginaInicial() {
               }}
             >
               {username}
+            </Text>
+            <Text
+            variant="body4"
+            styleSheet={{
+              color: appConfig.theme.colors.neutrals[300],
+              backgroundColor: appConfig.theme.colors.neutrals[600],
+              padding: "3px 10px",
+              marginTop: "10px",
+              borderRadius: "1000px",
+            }}>
+              {nome}
             </Text>
           </Box>
           {/* Photo Area */}

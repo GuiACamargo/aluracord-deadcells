@@ -61,12 +61,30 @@ export default function error() {
                 </Text>
                 <Text
                 styleSheet={{
+                    marginBottom: "15px",
+                    fontSize: "20px",
+                    color: appConfig.theme.colors.neutrals[300],
+                }}
+                >
+                    Possiveis Erros:
+                </Text>
+                <Text
+                styleSheet={{
+                    marginBottom: "10px",
+                    fontSize: "20px",
+                    color: appConfig.theme.colors.neutrals[300],
+                }}
+                >
+                    🔹 Espaço vazio no login
+                </Text>
+                <Text
+                styleSheet={{
                     marginBottom: "30px",
                     fontSize: "20px",
                     color: appConfig.theme.colors.neutrals[300],
                 }}
                 >
-                    Possivel Erro: espaço vazio no login!
+                    🔹 Usuário inválido
                 </Text>
                 <Button
                     label="Voltar ao Lobby"

@@ -89,6 +89,7 @@ export function ButtonSendSticker(props) {
                 }}
                 tag="li" key={sticker}
                 styleSheet={{
+                  cursor: "pointer",
                   width: '50%',
                   borderRadius: '5px',
                   padding: '10px',

@@ -23,6 +23,7 @@ export default function ChatPage() {
   const usuarioLogado = roteamento.query.username;
   const [mensagem, setMensagem] = React.useState("");
   const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
+  const [imgProfile, setImgProfile] = React.useState("`https://github.com/${mensagem.de}.png`")
 
   React.useEffect(() => {
     supabaseClient
@@ -209,7 +210,6 @@ function Header() {
 }
 
 function MessageList(props) {
-  console.log(props);
   return (
     <Box
       tag="ul"
@@ -249,8 +249,10 @@ function MessageList(props) {
                   display: "inline",
                   marginRight: "8px",
                 }}
-                src={`https://github.com/${mensagem.de}.png`}
+                // `https://github.com/${mensagem.de}.png`
+                src = {`https://github.com/${mensagem.de}.png`}
               />
+              
               <Text tag="strong"
               styleSheet={{
                 fontSize: "18px",
